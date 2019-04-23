@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Todo } from './todo';
+import { TodoDataService } from './todo-data.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'todo-app';
+  public title = 'todo-app';
+  public newTodo = new Todo();
+
+  constructor(private todoDataService: TodoDataService) {
+  }
+
+  onAddTodo(todo: Todo) {
+    this.todoDataService.addTodo(todo);
+  }
+
+  onToggleTodoComplete(todo: Todo) {
+    this.todoDataService.toggleTodoComplete(todo);
+  }
+
+  onRemoveTodo(todo: Todo) {
+    this.todoDataService.deleteTodoById(todo.id);
+  }
+
+  get todos() {
+    return this.todoDataService.getAllTodos();
+  }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Todo } from './todo';
-import { TodoDataService } from './todo-data.service';
+import { TodoInMemoryDataService } from './todo-inmemory.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ export class AppComponent {
   public title = 'todo-app';
   public newTodo = new Todo();
 
-  constructor(private todoDataService: TodoDataService) {
+  constructor(private todoDataService: TodoInMemoryDataService) {
   }
 
   onAddTodo(todo: Todo) {

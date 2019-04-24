@@ -4,58 +4,24 @@ import { Todo } from './todo';
 @Injectable({
   providedIn: 'root'
 })
-export class TodoDataService {
+export abstract class TodoDataService {
 
-  public lastId = 0;
-  public todos: Todo[] = [];
+  public lastId: number;
+  public todos: Todo[];
 
   constructor() { }
 
-  addTodo(todo: Todo): TodoDataService {
-    if (!todo.id) {
-      todo.id = ++this.lastId;
-    }
-    this.todos.push(todo);
-    return this;
-  }
+  abstract addTodo(todo: Todo): TodoDataService;
 
-  addTodos(todos: Todo[]): TodoDataService {
-    if (todos.length > 0) {
-      this.todos = [...todos];
-      return this;
-    }
-    return null
-  }
+  abstract addTodos(todos: Todo[]): TodoDataService;
 
-  deleteTodoById(id: number): TodoDataService {
-    this.todos = this.todos
-      .filter(todo => todo.id !== id);
-    return this;
-  }
+  abstract deleteTodoById(id: number): TodoDataService;
 
-  updateTodoById(id: number, values: Object = {}): Todo {
-    let todo = this.getTodoById(id);
-    if (!todo) {
-      return null;
-    }
-    Object.assign(todo, values);
-    return todo;
-  }
+  abstract updateTodoById(id: number, values: Object): Todo;
 
-  getAllTodos(): Todo[] {
-    return this.todos;
-  }
+  abstract getAllTodos(): Todo[];
 
-  getTodoById(id: number): Todo {
-    return this.todos
-      .filter(todo => todo.id === id)
-      .pop();
-  }
+  abstract getTodoById(id: number): Todo;
 
-  toggleTodoComplete(todo: Todo) {
-    let updatedTodo = this.updateTodoById(todo.id, {
-      complete: !todo.complete
-    });
-    return updatedTodo;
-  }
+  abstract toggleTodoComplete(todo: Todo);
 }
